@@ -1,4 +1,3 @@
-
 #!/bin/bash
 #Am I root or not?
 

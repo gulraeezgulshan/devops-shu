@@ -9,7 +9,7 @@ function rand_string {
   length=8
 
   # Use the fold, shuf, and head commands to generate a random string
-  echo "$(fold -w1 <<< "$chars" | shuf | head -c"$length" | tr -d '\n')"
+  echo "$(fold -w1 <<< "$chars" | shuf | tr -d '\n' | head -c"$length" )"
 }
 
 # Call the function to generate a random string and store it in a variable

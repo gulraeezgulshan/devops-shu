@@ -1,5 +1,5 @@
 #!/bin/bash
-# Cleanup
+# Cleanup in a bit better way
 
 LOG_DIR=/var/log
 ROOT_UID=0     # Only users with $UID 0 have root privileges.
@@ -30,10 +30,12 @@ then
   exit $E_XCD
 fi
 
-tail -n $lines messages > mesg.temp # Save last section of message log file.
-mv mesg.temp messages               # Rename it as system log file.
+tail -n $lines syslog > syslog.temp # Save last section of message log file.
+mv syslog.temp syslog               # Rename it as system log file.
 
-cat /dev/null > wtmp  
+cat /dev/null > wtmp 
+cat /dev/null > syslog
+
 echo "Log files cleaned up."
 
 exit 0

@@ -86,6 +86,9 @@ while true; do
  echo
  echo "================================"
 
+ # The "unset" command at the beginning is used to clear any existing values of 
+ # variables "K1", "K2", and "K3", in case they had been set previously.
+
  unset K1 K2 K3
  read -s -N1 -p "Press a key: "
  K1="$REPLY"
@@ -95,6 +98,9 @@ while true; do
  K3="$REPLY"
  key="$K1$K2$K3"
 
+# The "-s" option is used to suppress the input from being echoed to the screen. 
+# The "-N" option is used to limit the input to a certain number of characters. 
+# The "-t" option is used to specify a timeout for the input.
 done
 
 exit $?

@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Changes a file to all uppercase.
 

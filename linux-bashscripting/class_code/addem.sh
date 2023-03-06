@@ -9,4 +9,4 @@ else
   total=$[ $1 + $2 ]
   echo $1 + $2 is $total
 fi
-exit
+exit 

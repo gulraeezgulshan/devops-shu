@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Detects scripts within a directory.
 

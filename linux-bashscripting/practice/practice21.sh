@@ -1,13 +1,25 @@
 #!/bin/bash
-# Listing all users on the system
+# copydir.sh
 
-PASSWORD_FILE=/etc/passwd
-n=1           # User number
+#  Copy (verbose) all files in current directory ($PWD)
+#+ to directory specified on command-line.
 
-for name in $(awk 'BEGIN{FS=":"}{print $1}' < "$PASSWORD_FILE" )
-do
-  echo "USER #$n = $name"
-  let "n += 1"
-done  
+E_NOARGS=85
 
-exit $?
+if [ -z "$1" ]   # Exit if no argument given.
+then
+  echo "Usage: `basename $0` directory-to-copy-to"
+  exit $E_NOARGS
+fi  
+
+# Check if the directory exists, if not create it.
+if [ ! -d "$1" ]
+then
+  echo "Creating directory: $1"
+  mkdir "$1"
+fi
+
+ls . | xargs -i -t cp ./{} $1
+#ls . | xargs -i -t cp * $1
+
+exit 0

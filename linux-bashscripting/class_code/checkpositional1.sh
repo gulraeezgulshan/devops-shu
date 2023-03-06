@@ -2,7 +2,7 @@
 # Using one command-line parameter
 # checkpositional1.sh
 #
-if [ -n "$1" ]
+if [ -n "$1" ] 
 then
   factorial=1
   for (( number = 1; number <= $1; number++ ))

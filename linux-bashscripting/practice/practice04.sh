@@ -1,41 +1,34 @@
 #!/bin/bash
-# rpm-check.sh
 
-#  Queries an rpm file for description, listing,
-#+ and whether it can be installed.
-#  Saves output to a file.
-# 
-#  This script illustrates using a code block.
+# Check if user is root
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 
+   exit 1
+fi
 
-SUCCESS=0
-E_NOARGS=65
+# Determine the distribution of Linux
+if [ -f /etc/debian_version ]; then
+    echo "Detected Debian-based distribution"
+    pkg_manager="apt-get"
+elif [ -f /etc/redhat-release ]; then
+    echo "Detected Red Hat-based distribution"
+    pkg_manager="yum"
+else
+    echo "Unknown distribution"
+    exit 1
+fi
 
-if [ -z "$1" ]
-then
-  echo "Usage: `basename $0` rpm-file"
-  exit $E_NOARGS
-fi  
+# Read package names from user
+echo "Enter package names (separated by spaces):"
+read packages
 
-{ # Begin code block.
-  echo
-  echo "Archive Description:"
-  rpm -qpi $1       # Query description.
-  echo
-  echo "Archive Listing:"
-  rpm -qpl $1       # Query listing.
-  echo
-  rpm -i --test $1  # Query whether rpm file can be installed.
-  if [ "$?" -eq $SUCCESS ]
-  then
-    echo "$1 can be installed."
-  else
-    echo "$1 cannot be installed."
-  fi  
-  echo              # End code block.
-} > "$1.test"       # Redirects output of everything in block to file.
-
-echo "Results of rpm test in file $1.test"
-
-# See rpm man page for explanation of options.
-
-exit 0
+# Check if packages can be installed and install them
+for package in $packages; do
+    if dpkg -s "$package" > /dev/null 2>&1; then
+        echo "$package is already installed"
+    elif $pkg_manager install -y "$package" > /dev/null 2>&1; then
+        echo "$package installed successfully"
+    else
+        echo "$package could not be installed"
+    fi
+done

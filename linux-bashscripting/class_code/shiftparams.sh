@@ -7,9 +7,12 @@ echo "Using the shift method:"
 count=1
 while [ -n "$1" ]
 do
-  echo "Parameter #$count = $1"
+  echo "$1"
+  echo "$2" 
+  #echo "Parameter #$count = $1"
+  echo
   count=$[ $count + 1 ]
-  shift
+  shift 2
 done
 echo
 exit

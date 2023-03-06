@@ -4,6 +4,3 @@
 #
 echo Hello $1, glad to meet you.
 exit
-$
-$ ./stringparam.sh world
-Hello world, glad to meet you.
